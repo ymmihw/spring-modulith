@@ -19,7 +19,7 @@ public class ProductService {
         this.notificationService = notificationService;
     }
 
-    public void create(Product product) {
+    public void create(ProductDTO product) {
         notificationService.createNotification(new NotificationDTO(new Date(), "SMS", product.getName()));
         events.publishEvent(new NotificationDTO(new Date(), "SMS", product.getName()));
     }

@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>modulith-intro</module>
+        <module>modulith-event-externalization</module>
     </modules>
 
     <properties>

@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -57,13 +59,14 @@ class EventsExternalizationLiveTest {
     }
 
     @Test
-    void whenPublishingMessageFails_thenArticleIsStillSavedToDB() {
+    void whenPublishingMessageFails_thenArticleIsStillSavedToDB() throws InterruptedException {
         var article = new Article(null, "Introduction to Spring Boot", "John Doe", "<p> Spring Boot is [...] </p>");
 
         baeldung.createArticle(article);
 
-        assertThat(listener.getEvents())
-                .isEmpty();
+        TimeUnit.SECONDS.sleep(10);
+
+        assertThat(listener.getEvents()).isEmpty();
 
         assertThat(repository.findAll())
                 .hasSize(1)
